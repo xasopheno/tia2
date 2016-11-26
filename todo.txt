@@ -1,0 +1,1 @@
+First convert the video files to a series of image files with videoToImages.py
