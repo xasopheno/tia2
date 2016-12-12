@@ -49,8 +49,8 @@ def switch(numImages):
   # back and forth between two videos equally
   value = 1
   n = 1
-  x = 8
-  y = 5
+  x = 50
+  y = 2
 
   groupOne = []
   groupTwo = []

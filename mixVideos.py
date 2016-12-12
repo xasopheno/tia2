@@ -37,8 +37,8 @@ os.mkdir(folderTwo)
 os.chdir('/Users/dannymeyer/documents/projects/tia2/videosToMix')
 
 # separate videos into frame
-cmdFileOne = 'ffmpeg -i ' + fileOne + ' -r 10/1 ' + folderOne + '/$filename%03d.bmp'
-cmdFileTwo = 'ffmpeg -i ' + fileTwo + ' -r 10/1 ' + folderTwo + '/$filename%03d.bmp'
+cmdFileOne = 'ffmpeg -i ' + fileOne + ' -r 15/1 ' + folderOne + '/$filename%03d.bmp'
+cmdFileTwo = 'ffmpeg -i ' + fileTwo + ' -r 15/1 ' + folderTwo + '/$filename%03d.bmp'
 
 os.system(cmdFileOne)
 os.system(cmdFileTwo)
@@ -55,7 +55,7 @@ def fileCounter():
 numFiles = fileCounter()
 
 # groupOne, groupTwo = linearNumbers(numFiles * 4)
-groupOne, groupTwo = switch(numFiles * 3)
+groupOne, groupTwo = switch(numFiles * 50)
 
 # for number in range(1, len(groupOne)):
 #   name = groupOne.pop(0)
