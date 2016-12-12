@@ -3,6 +3,9 @@ from os import walk
 from os import system
 import random
 from path import path
+import glob
+
+from groups import linearNumbers, switch
 
 videosToMix = os.listdir('/Users/dannymeyer/documents/projects/tia2/videosToMix')
 
@@ -14,8 +17,6 @@ def getRandomFile(path):
   index = random.randrange(0, len(files))
   if files[index].endswith('MOV'):
     return files[index]
-  else:
-    getRandomFile(videosToMix)
 
 #choose two files
 fileOne = getRandomFile(videosToMix)
@@ -35,35 +36,51 @@ os.mkdir(folderTwo)
 # move folder of videos
 os.chdir('/Users/dannymeyer/documents/projects/tia2/videosToMix')
 
-# separate videos into frames
-cmdFileOne = 'ffmpeg -i ' + fileOne + ' -r 5/1 ' + folderOne + '/$filename%03d.bmp'
-cmdFileTwo = 'ffmpeg -i ' + fileTwo + ' -r 5/1 ' + folderTwo + '/$filename%03d.bmp'
+# separate videos into frame
+cmdFileOne = 'ffmpeg -i ' + fileOne + ' -r 10/1 ' + folderOne + '/$filename%03d.bmp'
+cmdFileTwo = 'ffmpeg -i ' + fileTwo + ' -r 10/1 ' + folderTwo + '/$filename%03d.bmp'
 
 os.system(cmdFileOne)
 os.system(cmdFileTwo)
-
 finalDirectory = '/Users/dannymeyer/documents/projects/tia2/videoFolders/reNumberedImages'
 
 os.chdir(finalDirectory)
+
+def fileCounter():
+  countOne = len(glob.glob1(folderOne,"*.bmp"))
+  countTwo = len(glob.glob1(folderTwo,"*.bmp"))
+  total = countOne + countTwo
+  return total
+
+numFiles = fileCounter()
+
+# groupOne, groupTwo = linearNumbers(numFiles * 4)
+groupOne, groupTwo = switch(numFiles * 3)
+
+# for number in range(1, len(groupOne)):
+#   name = groupOne.pop(0)
+#   print name
+
+# for number in range(1, len(groupTwo)):
+#   name = groupTwo.pop(0)
+#   print name
 
 def reNumberImages():
   suffix = '.bmp'
   videoOneImages = os.listdir(folderOne)
   videoTwoImages = os.listdir(folderTwo)
 
-  n = 0
   for image in videoOneImages:
     if image.endswith('.bmp'):
       print image
-      os.rename('/Users/dannymeyer/documents/projects/tia2/videoFolders/' + fileOne + '/' + image, str('%04d') % n + '.bmp')
-      n += 2
-  
-  n = 1
+      name = groupOne.pop(0)
+      os.rename('/Users/dannymeyer/documents/projects/tia2/videoFolders/' + fileOne + '/' + image, str('%04d') % name + '.bmp')
+       
   for image in videoTwoImages:
     if image.endswith('.bmp'):
       print image
-      os.rename('/Users/dannymeyer/documents/projects/tia2/videoFolders/' + fileTwo + '/' + image, str('%04d') % n + '.bmp')
-      n += 2
+      name = groupTwo.pop(0)
+      os.rename('/Users/dannymeyer/documents/projects/tia2/videoFolders/' + fileTwo + '/' + image, str('%04d') % name + '.bmp')
 
 reNumberImages()
 
